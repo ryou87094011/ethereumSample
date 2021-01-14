@@ -1,41 +1,54 @@
 <template>
   <div>
     <div class="balanceCoinSection">
-        残高: <h2><b>100,000 ETH</b></h2>
+        残高: <h2><b>{{ this.balance }} Wei</b></h2>
     </div>
     <div class="sendCoinSection">
-      <p>誰かにコインを送る</p>
+      <p>保存する画像を選択</p>
       <form>
         <div class="form-group row" style="margin-top: 0.5rem">
-          <label for="inputPassword" class="col-2 col-form-label"><b>宛先</b></label>
-          <input
-            v-model="inputId"
-            type="txt"
-            class="col-7 form-control"
-            id="inputID"
-          />
-          <button
-            type="button"
-            class="btn btn-primary col-2"
-            style="margin-left: 1rem"
-          >
-            <b>Send</b>
-          </button>
+          <label for="inputPassword" class="col-2 col-form-label"><b>参照</b></label>
+          <input type="file" @change="onSelectFile" id="exampleFormControlFile1">
         </div>
       </form>
+      <img :src="this.selectImg">
     </div>
   </div>
 </template>
 
 <script>
+import Eth from '../ethereum'
+
 export default {
   name: 'Main',
   data () {
     return {
-      inputId: ''
+      inputId: '',
+      balance: 0,
+      selectImg: ''
     }
   },
+  created: function () {
+    var ethereum = new Eth()
+    ethereum.getEthBalance().then(value => {
+      this.balance = value
+    })
+  },
+  mounted: {
+  },
   methods: {
+    /**
+     * select file on load
+     * @param e File
+     */
+    onSelectFile (e) {
+      const image = e.target.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(image)
+      reader.onload = () => {
+        this.selectImg = reader.result
+      }
+    }
   }
 }
 </script>

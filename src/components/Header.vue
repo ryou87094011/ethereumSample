@@ -2,30 +2,13 @@
   <header class="banner navbar navbar-default navbar-static-top no-padding-top">
     <img src="../../img/ethereum.png" class="rounded headerLogo" alt="logo" />
     <p class="headerTitle"><b>EthereumApp</b></p>
-    <button
-      type="button"
-      class="btn"
-      style="float: right; margin-top: 10px; background: ghostwhite"
-      @click="isShowLogoutButton"
-    >
-      Logout
-    </button>
   </header>
 </template>
 
 <script>
-import firebase from 'firebase'
 export default {
   name: 'Header',
   methods: {
-    isShowLogoutButton: function () {
-      firebase.auth().signOut().then(() => {
-        this.$router.push('/')
-      }).catch(err => {
-        console.log(err)
-        this.$router.push('/')
-      })
-    }
   }
 }
 </script>
@@ -55,8 +38,8 @@ export default {
 }
 
 .navbar-default {
-  background-color: #7ad2cc;
-  border-color: #7ad2cc;
+  background-color: #2d96ff;
+  border-color: #2d96ff;
 }
 
 .navbar-static-top {
